@@ -1,9 +1,11 @@
+architect:
+  - yegor256
 docker:
-  image: yegor256/rultor-image:1.13.0
+  image: yegor256/rultor-image:1.15.0
 assets:
-  settings.xml: yegor256/home#assets/xax/settings.xml
-  pubring.gpg: yegor256/home#assets/pubring.gpg
-  secring.gpg: yegor256/home#assets/secring.gpg
+  settings.xml: yegor256/objectionary-secrets#settings.xml
+  pubring.gpg: yegor256/objectionary-secrets#pubring.gpg
+  secring.gpg: yegor256/objectionary-secrets#secring.gpg
 install: |
   pdd --file=/dev/null
 merge:
@@ -15,4 +17,4 @@ release:
     mvn versions:set "-DnewVersion=${tag}" -Dstyle.color=never
     git commit -am "${tag}"
     mvn clean install -Dinvoker.skip
-    mvn clean deploy -Pxax -Psonatype --errors --settings ../settings.xml -Dstyle.color=never
+    mvn clean deploy -Pobjectionary -Psonatype --errors --settings ../settings.xml -Dstyle.color=never
