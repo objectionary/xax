@@ -39,7 +39,7 @@ final class XaxMatcherTest {
     @ClasspathSource(value = "org/eolang/xax/packs", glob = "**.yaml")
     void validatesSimpleScenario(final String yaml) {
         MatcherAssert.assertThat(
-            yaml,
+            new XaxScenario(yaml),
             new XaxMatcher()
         );
     }
@@ -48,7 +48,7 @@ final class XaxMatcherTest {
     @ClasspathSource(value = "org/eolang/xax/broken", glob = "**.yaml")
     void validatesBrokenScenario(final String yaml) {
         MatcherAssert.assertThat(
-            yaml,
+            new XaxScenario(yaml),
             Matchers.not(new XaxMatcher())
         );
     }

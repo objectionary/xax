@@ -58,6 +58,8 @@ Finally, make a unit test (using
 and [Jucs](https://github.com/objectionary/jucs)):
 
 ```java
+import org.eolang.xax.XaxScenario;
+import org.eolang.xax.XaxMatcher;
 import org.eolang.jucs.ClasspathSource;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -65,9 +67,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 
 @ParameterizedTest
 @ClasspathSource(value = "", glob = "**.yaml")
-void validatesSimpleScenario(final String yaml) {
+void itWorks(final String yaml) {
     MatcherAssert.assertThat(
-        yaml,
+        new XaxScenario(yaml),
         new XaxMatcher()
     );
 }

@@ -24,23 +24,18 @@
 package org.eolang.xax;
 
 import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
-import com.yegor256.xsline.Shift;
-import com.yegor256.xsline.TrClasspath;
 import com.yegor256.xsline.Xsline;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.Map;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
-import org.yaml.snakeyaml.Yaml;
 
 /**
  * Hamcrest matcher.
  *
  * @since 0.0.1
  */
-public final class XaxMatcher extends TypeSafeMatcher<String> {
+public final class XaxMatcher extends TypeSafeMatcher<XaxScenario> {
 
     /**
      * List of failures.
@@ -48,17 +43,11 @@ public final class XaxMatcher extends TypeSafeMatcher<String> {
     private final Collection<String> failures = new LinkedList<>();
 
     @Override
-    @SuppressWarnings("unchecked")
-    public boolean matchesSafely(final String yaml) {
-        final Map<String, Object> map = new Yaml().load(yaml);
-        TrClasspath<Shift> train = new TrClasspath<>();
-        for (final String sheet : (Iterable<String>) map.get("sheets")) {
-            train = train.with(sheet);
-        }
-        final XML before = new XMLDocument(map.get("document").toString());
-        final XML after = new Xsline(train.back()).pass(before);
+    public boolean matchesSafely(final XaxScenario scenario) {
+        final XML before = scenario.document();
+        final XML after = new Xsline(scenario.train()).pass(before);
         boolean good = true;
-        for (final String xpath : (Iterable<String>) map.get("asserts")) {
+        for (final String xpath : scenario.asserts()) {
             if (after.nodes(xpath).isEmpty()) {
                 good = false;
                 this.failures.add(xpath);
