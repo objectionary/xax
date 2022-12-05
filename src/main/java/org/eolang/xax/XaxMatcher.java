@@ -59,8 +59,11 @@ public final class XaxMatcher extends TypeSafeMatcher<XaxScenario> {
     @Override
     public void describeTo(final Description description) {
         description.appendText(
-            String.format("%d XPaths assertions failed: ", this.failures.size())
+            String.format(
+                "%d XPaths assertions failed: %s",
+                this.failures.size(),
+                this.failures
+            )
         );
-        description.appendText(this.failures.toString());
     }
 }
