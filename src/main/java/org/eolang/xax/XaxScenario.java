@@ -85,7 +85,11 @@ public final class XaxScenario {
     public Train<Shift> train() {
         final Map<String, Object> map = new Yaml().load(this.yaml);
         TrClasspath<Shift> train = new TrClasspath<>();
-        for (final String sheet : (Iterable<String>) map.get("sheets")) {
+        Object list = map.get("sheets");
+        if (list == null) {
+            list = Arrays.asList();
+        }
+        for (final String sheet : (Iterable<String>) list) {
             train = train.with(sheet);
         }
         return train.back();

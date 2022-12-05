@@ -50,4 +50,12 @@ final class XaxScenarioTest {
         );
     }
 
+    @Test
+    void detectsSheets() {
+        MatcherAssert.assertThat(
+            new XaxScenario("skip: true\n").train(),
+            Matchers.is(Matchers.emptyIterable())
+        );
+    }
+
 }
