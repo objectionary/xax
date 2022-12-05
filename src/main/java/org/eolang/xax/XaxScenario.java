@@ -28,6 +28,7 @@ import com.jcabi.xml.XMLDocument;
 import com.yegor256.xsline.Shift;
 import com.yegor256.xsline.TrClasspath;
 import com.yegor256.xsline.Train;
+import java.util.Arrays;
 import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 
@@ -54,6 +55,15 @@ public final class XaxScenario {
     @Override
     public String toString() {
         return this.document().toString();
+    }
+
+    /**
+     * Skip it?
+     * @return TRUE if skip
+     */
+    public boolean skip() {
+        final Map<String, Object> map = new Yaml().load(this.yaml);
+        return (boolean) map.get("skip");
     }
 
     /**
@@ -88,7 +98,11 @@ public final class XaxScenario {
     @SuppressWarnings("unchecked")
     public Iterable<String> asserts() {
         final Map<String, Object> map = new Yaml().load(this.yaml);
-        return (Iterable<String>) map.get("asserts");
+        Object list = map.get("asserts");
+        if (list == null) {
+            list = Arrays.asList();
+        }
+        return (Iterable<String>) list;
     }
 
 }
