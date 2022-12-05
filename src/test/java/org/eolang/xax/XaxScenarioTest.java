@@ -58,4 +58,12 @@ final class XaxScenarioTest {
         );
     }
 
+    @Test
+    void detectsDocument() {
+        MatcherAssert.assertThat(
+            new XaxScenario("document: <foo/>\n").document().nodes("/foo"),
+            Matchers.not(Matchers.emptyIterable())
+        );
+    }
+
 }
