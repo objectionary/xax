@@ -1,0 +1,12 @@
+sheets:
+  - /org/eolang/xax/simple.xsl
+document:
+  <doc>
+    <a>
+      <foo>hello</foo>
+    </a>
+    <b>bar</b>
+  </doc>
+asserts:
+  - /doc/xyz
+  - /doc/foo
