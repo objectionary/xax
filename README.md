@@ -24,11 +24,56 @@ You add this to your `pom.xml`:
 </dependency>
 ```
 
-Then, do this:
+Then, creat this XSL file in `src/main/resources/simple.xsl`:
+
+```xml
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+  <xsl:template match="foo">
+    <xsl:copy>
+      <xsl:text>bye</xsl:text>
+    </xsl:copy>
+  </xsl:template>
+  <xsl:template match="node()|@*" mode="#default">
+    <xsl:copy>
+      <xsl:apply-templates select="node()|@*"/>
+    </xsl:copy>
+  </xsl:template>
+</xsl:stylesheet>
+```
+
+Then, create this YAML file:
+
+```yaml
+sheets:
+  - simple.xsl
+document:
+  <doc><foo>hello</foo></doc>
+asserts:
+  - /doc/foo[.='bye']
+```
+
+Finally, make a unit test (using
+[JUnit5](https://github.com/junit-team/junit5),
+[Hamcrest](https://github.com/hamcrest/JavaHamcrest) 
+and [Jucs](https://github.com/objectionary/jucs)):
 
 ```java
-...
+import org.eolang.jucs.ClasspathSource;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.params.ParameterizedTest;
+
+@ParameterizedTest
+@ClasspathSource(value = "", glob = "**.yaml")
+void validatesSimpleScenario(final String yaml) {
+    MatcherAssert.assertThat(
+        yaml,
+        new XaxMatcher()
+    );
+}
 ```
+
+Should work.
 
 ## How to Contribute
 
