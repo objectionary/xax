@@ -4,7 +4,6 @@
 
 [![mvn](https://github.com/objectionary/xax/actions/workflows/mvn.yml/badge.svg)](https://github.com/objectionary/xax/actions/workflows/mvn.yml)
 [![PDD status](http://www.0pdd.com/svg?name=objectionary/xax)](http://www.0pdd.com/p?name=objectionary/xax)
-[![Maintainability](https://api.codeclimate.com/v1/badges/742bde48ea6fabdba1ce/maintainability)](https://codeclimate.com/github/objectionary/xax/maintainability)
 [![Maven Central](https://img.shields.io/maven-central/v/org.eolang/xax.svg)](https://maven-badges.herokuapp.com/maven-central/org.eolang/xax)
 [![Javadoc](http://www.javadoc.io/badge/org.eolang/xax.svg)](http://www.javadoc.io/doc/org.eolang/xax)
 [![codecov](https://codecov.io/gh/objectionary/xax/branch/master/graph/badge.svg)](https://codecov.io/gh/objectionary/xax)
