@@ -132,8 +132,8 @@ public final class XaxStory {
             .append(
                 String.format(
                     "\nXML after XSL transformation (%d->%d chars):\n  ",
-                    this.before.toString().length(),
-                    this.after.toString().length()
+                    new Unchecked<>(this.before).value().toString().length(),
+                    new Unchecked<>(this.after).value().toString().length()
                 )
             )
             .append(
