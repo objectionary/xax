@@ -128,7 +128,14 @@ public final class XaxStory {
     @Override
     public String toString() {
         final StringBuilder txt = new StringBuilder(1024);
-        txt.append("\nXML after XSL transformation:\n  ")
+        txt
+            .append(
+                String.format(
+                    "\nXML after XSL transformation (%d->%d chars):\n  ",
+                    this.before.toString().length(),
+                    this.after.toString().length()
+                )
+            )
             .append(
                 new Unchecked<>(this.after)
                     .value()
