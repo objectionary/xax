@@ -59,16 +59,21 @@ and [Jucs](https://github.com/objectionary/jucs)):
 ```java
 
 import org.eolang.jucs.ClasspathSource;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Test;
 
 @ParameterizedTest
 @ClasspathSource(value = "", glob = "**.yaml")
 void itWorks(final String yaml){
-    MatcherAssert.assertThat(
-    new XaxScenario(yaml),
-    new XaxMatcher()
-    );
-    }
+  Assumptions.assumeFalse(new XaxFaults(yaml).skip());
+  MatcherAssert.assertThat(
+    new XaxFaults(yaml),
+    Matchers.emptyIterable()
+  );
+}
 ```
 
 Should work.
