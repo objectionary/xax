@@ -23,69 +23,57 @@
  */
 package org.eolang.xax;
 
+import org.cactoos.io.ResourceOf;
+import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 import org.eolang.jucs.ClasspathSource;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 
 /**
- * Test case for {@link XaxFaults}.
+ * Test case for {@link XaxStory}.
  *
- * @since 0.0.1
+ * @since 0.1.0
  */
-final class XaxFaultsTest {
+final class XaxStoryTest {
 
     @Test
-    void detectsSkip() {
+    void printsItself() {
         MatcherAssert.assertThat(
-            new XaxFaults("skip: true\n").skip(),
-            Matchers.is(true)
-        );
-    }
-
-    @Test
-    void detectsAsserts() {
-        MatcherAssert.assertThat(
-            new XaxFaults("skip: true\n").asserts(),
-            Matchers.is(Matchers.emptyIterable())
-        );
-    }
-
-    @Test
-    void detectsSheets() {
-        MatcherAssert.assertThat(
-            new XaxFaults("skip: true\n").train(),
-            Matchers.is(Matchers.emptyIterable())
-        );
-    }
-
-    @Test
-    void detectsDocument() {
-        MatcherAssert.assertThat(
-            new XaxFaults("document: <foo/>\n").document().nodes("/foo"),
-            Matchers.not(Matchers.emptyIterable())
+            new XaxStory(
+                new UncheckedText(
+                    new TextOf(
+                        new ResourceOf("org/eolang/xax/broken/bad-simple.yaml")
+                    )
+                ).asString()
+            ),
+            Matchers.hasToString(
+                Matchers.allOf(
+                    Matchers.containsString("Asserts:"),
+                    Matchers.containsString("false: /doc/xyz"),
+                    Matchers.containsString("false: /doc/foo")
+                )
+            )
         );
     }
 
     @ParameterizedTest
     @ClasspathSource(value = "org/eolang/xax/packs", glob = "**.yaml")
     void validatesSimpleScenario(final String yaml) {
-        Assumptions.assumeFalse(new XaxFaults(yaml).skip());
         MatcherAssert.assertThat(
-            new XaxFaults(yaml),
-            Matchers.emptyIterable()
+            new XaxStory(yaml),
+            Matchers.is(true)
         );
     }
 
     @ParameterizedTest
     @ClasspathSource(value = "org/eolang/xax/broken", glob = "**.yaml")
     void validatesBrokenScenario(final String yaml) {
-        Assumptions.assumeFalse(new XaxFaults(yaml).skip());
         MatcherAssert.assertThat(
-            new XaxFaults(yaml),
-            Matchers.not(Matchers.emptyIterable())
+            new XaxStory(yaml),
+            Matchers.not(Matchers.is(true))
         );
     }
 

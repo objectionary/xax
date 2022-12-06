@@ -58,20 +58,19 @@ and [Jucs](https://github.com/objectionary/jucs)):
 
 ```java
 import org.eolang.jucs.ClasspathSource;
+import org.eolang.xax.XaxStory;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 final class MyTest {
     @ParameterizedTest
     @ClasspathSource(value = "", glob = "**.yaml")
-    void itWorks(final String yaml) {
-        Assumptions.assumeFalse(new XaxFaults(yaml).skip());
+    void itWorks(String yaml) {
         MatcherAssert.assertThat(
-            new XaxFaults(yaml),
-            Matchers.emptyIterable()
+            new XaxStory(yaml),
+            Matchers.is(true)
         );
     }
 }
