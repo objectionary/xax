@@ -128,30 +128,36 @@ public final class XaxStory {
     @Override
     public String toString() {
         final StringBuilder txt = new StringBuilder(1024);
-        txt
-            .append(
-                String.format(
-                    "\nXML after XSL transformation (%d->%d chars):\n  ",
-                    new Unchecked<>(this.before).value().toString().length(),
-                    new Unchecked<>(this.after).value().toString().length()
+        if (new Unchecked<>(this.skip).value()) {
+            txt.append("Skipped");
+        } else {
+            txt
+                .append(
+                    String.format(
+                        "\nXML after XSL transformation (%d->%d chars):\n  ",
+                        new Unchecked<>(this.before)
+                            .value().toString().length(),
+                        new Unchecked<>(this.after)
+                            .value().toString().length()
+                    )
                 )
-            )
-            .append(
-                new Unchecked<>(this.after)
-                    .value()
-                    .toString()
-                    .replace("\n", "\n  ")
-            )
-            .append("\nAsserts:\n");
-        for (final Map.Entry<String, Boolean> ent
-            : new Unchecked<>(this.asserts).value()) {
-            txt.append(
-                String.format(
-                    "  %s: %s\n",
-                    ent.getValue(),
-                    ent.getKey()
+                .append(
+                    new Unchecked<>(this.after)
+                        .value()
+                        .toString()
+                        .replace("\n", "\n  ")
                 )
-            );
+                .append("\nAsserts:\n");
+            for (final Map.Entry<String, Boolean> ent
+                : new Unchecked<>(this.asserts).value()) {
+                txt.append(
+                    String.format(
+                        "  %s: %s\n",
+                        ent.getValue(),
+                        ent.getKey()
+                    )
+                );
+            }
         }
         return txt.toString();
     }
@@ -167,14 +173,16 @@ public final class XaxStory {
             );
         }
         boolean good = true;
-        for (final Map.Entry<String, Boolean> ent
-            : new Unchecked<>(this.asserts).value()) {
-            if (!ent.getValue()) {
-                good = false;
-                break;
+        if (!new Unchecked<>(this.skip).value()) {
+            for (final Map.Entry<String, Boolean> ent
+                : new Unchecked<>(this.asserts).value()) {
+                if (!ent.getValue()) {
+                    good = false;
+                    break;
+                }
             }
         }
-        return good || new Unchecked<>(this.skip).value();
+        return good;
     }
 
     @Override
