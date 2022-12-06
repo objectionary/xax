@@ -28,16 +28,20 @@ import com.jcabi.xml.XMLDocument;
 import com.yegor256.xsline.Shift;
 import com.yegor256.xsline.TrClasspath;
 import com.yegor256.xsline.Train;
+import com.yegor256.xsline.Xsline;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 
 /**
- * Scenario in a YAML.
+ * List of faults in a given YAML.
  *
- * @since 0.0.1
+ * @since 0.1.0
  */
-public final class XaxScenario {
+public final class XaxFaults implements Iterable<String> {
 
     /**
      * The YAML.
@@ -48,7 +52,7 @@ public final class XaxScenario {
      * Ctor.
      * @param yml YAML
      */
-    public XaxScenario(final String yml) {
+    public XaxFaults(final String yml) {
         this.yaml = yml;
     }
 
@@ -57,13 +61,30 @@ public final class XaxScenario {
         return this.document().toString();
     }
 
+    @Override
+    public Iterator<String> iterator() {
+        final XML before = this.document();
+        final XML after = new Xsline(this.train()).pass(before);
+        final Collection<String> failures = new LinkedList<>();
+        for (final String xpath : this.asserts()) {
+            if (after.nodes(xpath).isEmpty()) {
+                failures.add(xpath);
+            }
+        }
+        return failures.iterator();
+    }
+
     /**
      * Skip it?
      * @return TRUE if skip
      */
     public boolean skip() {
         final Map<String, Object> map = new Yaml().load(this.yaml);
-        return (boolean) map.get("skip");
+        Object skip = map.get("skip");
+        if (skip == null) {
+            skip = Boolean.FALSE;
+        }
+        return (boolean) skip;
     }
 
     /**

@@ -26,30 +26,66 @@ package org.eolang.xax;
 import org.eolang.jucs.ClasspathSource;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 
 /**
- * Test case for {@link XaxMatcher}.
+ * Test case for {@link XaxFaults}.
  *
  * @since 0.0.1
  */
-final class XaxMatcherTest {
+final class XaxFaultsTest {
+
+    @Test
+    void detectsSkip() {
+        MatcherAssert.assertThat(
+            new XaxFaults("skip: true\n").skip(),
+            Matchers.is(true)
+        );
+    }
+
+    @Test
+    void detectsAsserts() {
+        MatcherAssert.assertThat(
+            new XaxFaults("skip: true\n").asserts(),
+            Matchers.is(Matchers.emptyIterable())
+        );
+    }
+
+    @Test
+    void detectsSheets() {
+        MatcherAssert.assertThat(
+            new XaxFaults("skip: true\n").train(),
+            Matchers.is(Matchers.emptyIterable())
+        );
+    }
+
+    @Test
+    void detectsDocument() {
+        MatcherAssert.assertThat(
+            new XaxFaults("document: <foo/>\n").document().nodes("/foo"),
+            Matchers.not(Matchers.emptyIterable())
+        );
+    }
 
     @ParameterizedTest
     @ClasspathSource(value = "org/eolang/xax/packs", glob = "**.yaml")
     void validatesSimpleScenario(final String yaml) {
+        Assumptions.assumeFalse(new XaxFaults(yaml).skip());
         MatcherAssert.assertThat(
-            new XaxScenario(yaml),
-            new XaxMatcher()
+            new XaxFaults(yaml),
+            Matchers.emptyIterable()
         );
     }
 
     @ParameterizedTest
     @ClasspathSource(value = "org/eolang/xax/broken", glob = "**.yaml")
     void validatesBrokenScenario(final String yaml) {
+        Assumptions.assumeFalse(new XaxFaults(yaml).skip());
         MatcherAssert.assertThat(
-            new XaxScenario(yaml),
-            Matchers.not(new XaxMatcher())
+            new XaxFaults(yaml),
+            Matchers.not(Matchers.emptyIterable())
         );
     }
 
