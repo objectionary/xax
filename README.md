@@ -40,7 +40,7 @@ Then, creat this XSL file in `src/main/resources/simple.xsl`:
 </xsl:stylesheet>
 ```
 
-Then, create this YAML file:
+Then, create this YAML file in `src/test/resources/simple.yaml`:
 
 ```yaml
 sheets:
@@ -53,8 +53,8 @@ asserts:
 
 Finally, make a unit test (using
 [JUnit5](https://github.com/junit-team/junit5),
-[Hamcrest](https://github.com/hamcrest/JavaHamcrest) 
-and [Jucs](https://github.com/objectionary/jucs)):
+[Hamcrest](https://github.com/hamcrest/JavaHamcrest), 
+and `@ClasspathSource` from [Jucs](https://github.com/objectionary/jucs)):
 
 ```java
 import org.eolang.jucs.ClasspathSource;

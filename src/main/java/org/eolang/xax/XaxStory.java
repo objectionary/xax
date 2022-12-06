@@ -34,6 +34,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
 import org.cactoos.Scalar;
+import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 import org.yaml.snakeyaml.Yaml;
 
@@ -75,45 +76,53 @@ public final class XaxStory {
      */
     @SuppressWarnings("unchecked")
     public XaxStory(final String txt) {
-        this.yaml = () -> new Yaml().load(txt);
-        this.before = () -> new XMLDocument(
-            this.yaml.value().get("document").toString()
+        this.yaml = new Sticky<>(() -> new Yaml().load(txt));
+        this.before = new Sticky<>(
+            () -> new XMLDocument(
+                this.yaml.value().get("document").toString()
+            )
         );
-        this.after = () -> {
-            TrClasspath<Shift> train = new TrClasspath<>();
-            Object list = this.yaml.value().get("sheets");
-            if (list == null) {
-                list = Arrays.asList();
+        this.after = new Sticky<>(
+            () -> {
+                TrClasspath<Shift> train = new TrClasspath<>();
+                Object list = this.yaml.value().get("sheets");
+                if (list == null) {
+                    list = Arrays.asList();
+                }
+                for (final String sheet : (Iterable<String>) list) {
+                    train = train.with(sheet);
+                }
+                return new Xsline(train.back()).pass(this.before.value());
             }
-            for (final String sheet : (Iterable<String>) list) {
-                train = train.with(sheet);
+        );
+        this.asserts = new Sticky<>(
+            () -> {
+                Object list = this.yaml.value().get("asserts");
+                if (list == null) {
+                    list = Arrays.asList();
+                }
+                final Collection<Map.Entry<String, Boolean>> results =
+                    new LinkedList<>();
+                for (final String xpath : (Iterable<String>) list) {
+                    results.add(
+                        new AbstractMap.SimpleImmutableEntry<>(
+                            xpath,
+                            !this.after.value().nodes(xpath).isEmpty()
+                        )
+                    );
+                }
+                return results;
             }
-            return new Xsline(train.back()).pass(this.before.value());
-        };
-        this.asserts = () -> {
-            Object list = this.yaml.value().get("asserts");
-            if (list == null) {
-                list = Arrays.asList();
+        );
+        this.skip = new Sticky<>(
+            () -> {
+                Object flag = this.yaml.value().get("skip");
+                if (flag == null) {
+                    flag = Boolean.FALSE;
+                }
+                return (Boolean) flag;
             }
-            final Collection<Map.Entry<String, Boolean>> results =
-                new LinkedList<>();
-            for (final String xpath : (Iterable<String>) list) {
-                results.add(
-                    new AbstractMap.SimpleImmutableEntry<>(
-                        xpath,
-                        !this.after.value().nodes(xpath).isEmpty()
-                    )
-                );
-            }
-            return results;
-        };
-        this.skip = () -> {
-            Object flag = this.yaml.value().get("skip");
-            if (flag == null) {
-                flag = Boolean.FALSE;
-            }
-            return (Boolean) flag;
-        };
+        );
     }
 
     @Override
