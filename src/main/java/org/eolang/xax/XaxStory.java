@@ -42,7 +42,9 @@ import org.yaml.snakeyaml.Yaml;
  * The test scenario in YAML.
  *
  * @since 0.1.0
+ * @deprecated This class is deprecated, use {@link StoryMatcher} instead.
  */
+@Deprecated
 public final class XaxStory {
 
     /**

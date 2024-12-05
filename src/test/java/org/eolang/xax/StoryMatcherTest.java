@@ -33,30 +33,24 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 
 /**
- * Test case for {@link XaxStory}.
+ * Test case for {@link StoryMatcher}.
  *
  * @since 0.1.0
  */
-final class XaxStoryTest {
+final class StoryMatcherTest {
 
     @Test
     void printsItself() {
         MatcherAssert.assertThat(
-            "passes with no exceptions",
-            new XaxStory(
+            "finds errors in the story",
+            new StoryMatcher().matches(
                 new UncheckedText(
                     new TextOf(
                         new ResourceOf("org/eolang/xax/broken/bad-simple.yaml")
                     )
                 ).asString()
             ),
-            Matchers.hasToString(
-                Matchers.allOf(
-                    Matchers.containsString("Asserts:"),
-                    Matchers.containsString("false: /doc/xyz"),
-                    Matchers.containsString("false: /doc/foo")
-                )
-            )
+            Matchers.is(false)
         );
     }
 
@@ -65,8 +59,8 @@ final class XaxStoryTest {
     void validatesSimpleScenario(final String yaml) {
         MatcherAssert.assertThat(
             "passes with no exceptions",
-            new XaxStory(yaml),
-            Matchers.is(true)
+            yaml,
+            new StoryMatcher()
         );
     }
 
@@ -74,9 +68,9 @@ final class XaxStoryTest {
     @ClasspathSource(value = "org/eolang/xax/broken", glob = "**.yaml")
     void validatesBrokenScenario(final String yaml) {
         MatcherAssert.assertThat(
-            "passes with no exceptions",
-            new XaxStory(yaml),
-            Matchers.not(Matchers.is(true))
+            "reports ",
+            yaml,
+            Matchers.not(new StoryMatcher())
         );
     }
 
