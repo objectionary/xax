@@ -32,16 +32,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
- * Test case for {@link XtStrictBefore}.
+ * Test case for {@link XtStrict}.
  *
  * @since 0.1.0
  */
-final class XtStrictBeforeTest {
+final class XtStrictTest {
 
     @Test
     @ExtendWith(WeAreOnline.class)
     void parsesAndTransforms() throws Exception {
-        final Xtory xtory = new XtStrictBefore(
+        final Xtory xtory = new XtStrict(
             new XtYaml(
                 new TextOf(
                     new ResourceOf("org/eolang/xax/packs/with-schema.yaml")
@@ -50,7 +50,7 @@ final class XtStrictBeforeTest {
         );
         MatcherAssert.assertThat(
             "passes with no exceptions",
-            XhtmlMatchers.xhtml(xtory.before()),
+            XhtmlMatchers.xhtml(xtory.after()),
             XhtmlMatchers.hasXPaths(xtory.asserts())
         );
     }
