@@ -39,6 +39,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.function.Function;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.jupiter.api.Assumptions;
@@ -54,7 +55,12 @@ public final class StoryMatcher extends BaseMatcher<String> {
     /**
      * The train to start with.
      */
-    private final Train<Shift> train = new TrDefault<>();
+    private final Train<Shift> train;
+
+    /**
+     * The parser to use, when {@code input} is provided in the YAML.
+     */
+    private final Function<String, XML> parser;
 
     /**
      * The header of the match.
@@ -66,6 +72,28 @@ public final class StoryMatcher extends BaseMatcher<String> {
      */
     private String summary;
 
+    /**
+     * Ctor.
+     */
+    public StoryMatcher() {
+        this(
+            input -> {
+                throw new UnsupportedOperationException(
+                    "Parser is not provided, while YAML doesn't have the 'document' property"
+                );
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param prsr The parser to use
+     */
+    public StoryMatcher(final Function<String, XML> prsr) {
+        this.parser = prsr;
+        this.train = new TrDefault<>();
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public boolean matches(final Object story) {
@@ -73,9 +101,7 @@ public final class StoryMatcher extends BaseMatcher<String> {
             String.class.cast(story)
         );
         Assumptions.assumeTrue(yaml.get("skip") == null);
-        final XML before = new XMLDocument(
-            yaml.get("document").toString()
-        );
+        final XML before = this.before(yaml);
         final XML after = this.xsline(yaml).pass(before);
         Object asserts = yaml.get("asserts");
         if (asserts == null) {
@@ -141,6 +167,22 @@ public final class StoryMatcher extends BaseMatcher<String> {
     @Override
     public void describeMismatch(final Object log, final Description desc) {
         desc.appendText("\n").appendText(this.summary);
+    }
+
+    /**
+     * Build input XML document.
+     * @param yaml The YAML
+     * @return The XML
+     */
+    private XML before(final Map<String, Object> yaml) {
+        final Object doc = yaml.get("document");
+        final XML xml;
+        if (doc == null) {
+            xml = this.parser.apply(yaml.get("input").toString());
+        } else {
+            xml = new XMLDocument(doc.toString());
+        }
+        return xml;
     }
 
     /**

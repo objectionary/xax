@@ -22,7 +22,7 @@
 ---
 sheets:
   - /org/eolang/xax/simple.xsl
-document:
+document: |
   <doc>
     <a>
       <foo>hello</foo>

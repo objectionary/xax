@@ -20,16 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 ---
-sheets:
-  - /org/eolang/xax/simple.xsl
-document: |
-  <doc>
-    <a>
-      <foo>hello</foo>
-    </a>
-    <b>bar</b>
-  </doc>
+input: |
+  # No comments.
+  [] > foo
+    QQ.io.stdout > @
+      "Hello, world!"
 asserts:
-  - /doc/a
-  - /doc/b
-  - /doc/a/foo[.='(hello)']
+  - /program/objects/o

@@ -60,11 +60,9 @@ and `@ClasspathSource` from [Jucs](https://github.com/objectionary/jucs)):
 
 ```java
 import org.eolang.jucs.ClasspathSource;
-import org.eolang.xax.XaxStory;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.api.Test;
 
 final class MyTest {
     @ParameterizedTest

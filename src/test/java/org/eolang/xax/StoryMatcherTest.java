@@ -23,10 +23,13 @@
  */
 package org.eolang.xax;
 
+import java.io.IOException;
+import org.cactoos.io.InputOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UncheckedText;
 import org.eolang.jucs.ClasspathSource;
+import org.eolang.parser.EoSyntax;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -60,7 +63,15 @@ final class StoryMatcherTest {
         MatcherAssert.assertThat(
             "passes with no exceptions",
             yaml,
-            new StoryMatcher()
+            new StoryMatcher(
+                eo -> {
+                    try {
+                        return new EoSyntax(new InputOf(eo)).parsed();
+                    } catch (final IOException ex) {
+                        throw new IllegalArgumentException(ex);
+                    }
+                }
+            )
         );
     }
 
