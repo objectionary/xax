@@ -30,23 +30,23 @@ import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case for {@link Story}.
+ * Test case for {@link Xtory}.
  *
  * @since 0.1.0
  */
-final class StoryTest {
+final class XtoryTest {
 
     @Test
     void parsesAndTransforms() throws Exception {
-        final Story story = new YamlStory(
+        final Xtory xtory = new YamlXtory(
             new TextOf(
                 new ResourceOf("org/eolang/xax/packs/simple.yaml")
             ).asString()
         );
         MatcherAssert.assertThat(
             "passes with no exceptions",
-            XhtmlMatchers.xhtml(story.after()),
-            XhtmlMatchers.hasXPaths(story.asserts())
+            XhtmlMatchers.xhtml(xtory.after()),
+            XhtmlMatchers.hasXPaths(xtory.asserts())
         );
     }
 

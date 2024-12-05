@@ -35,24 +35,24 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 
 /**
- * Test case for {@link StoryMatcher}.
+ * Test case for {@link XtoryMatcher}.
  *
  * @since 0.1.0
  */
-final class StoryMatcherTest {
+final class XtoryMatcherTest {
 
     @Test
     void printsItself() {
         MatcherAssert.assertThat(
             "finds errors in the story",
-            new YamlStory(
+            new YamlXtory(
                 new UncheckedText(
                     new TextOf(
                         new ResourceOf("org/eolang/xax/packs/simple.yaml")
                     )
                 ).asString()
             ),
-            new StoryMatcher()
+            new XtoryMatcher()
         );
     }
 
@@ -61,11 +61,11 @@ final class StoryMatcherTest {
     void validatesSimpleScenario(final String yaml) {
         MatcherAssert.assertThat(
             "passes with no exceptions",
-            new YamlStory(
+            new YamlXtory(
                 yaml,
                 eo -> new EoSyntax(new InputOf(eo)).parsed()
             ),
-            new StoryMatcher()
+            new XtoryMatcher()
         );
     }
 
@@ -74,8 +74,8 @@ final class StoryMatcherTest {
     void validatesBrokenScenario(final String yaml) {
         MatcherAssert.assertThat(
             "reports ",
-            new YamlStory(yaml),
-            Matchers.not(new StoryMatcher())
+            new YamlXtory(yaml),
+            Matchers.not(new XtoryMatcher())
         );
     }
 

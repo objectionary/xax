@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Assumptions;
  *
  * @since 0.1.0
  */
-public final class StoryMatcher extends BaseMatcher<Story> {
+public final class XtoryMatcher extends BaseMatcher<Xtory> {
 
     /**
      * The header of the match.
@@ -51,13 +51,13 @@ public final class StoryMatcher extends BaseMatcher<Story> {
 
     @Override
     public boolean matches(final Object object) {
-        final Story story = Story.class.cast(object);
-        Assumptions.assumeTrue(story.map().get("skip") == null);
-        final XML after = story.after();
+        final Xtory xtory = Xtory.class.cast(object);
+        Assumptions.assumeTrue(xtory.map().get("skip") == null);
+        final XML after = xtory.after();
         final Collection<Map.Entry<String, Boolean>> xpaths =
             new LinkedList<>();
         int failures = 0;
-        for (final String xpath : story.asserts()) {
+        for (final String xpath : xtory.asserts()) {
             final boolean success = !after.nodes(xpath).isEmpty();
             xpaths.add(
                 new AbstractMap.SimpleImmutableEntry<>(
@@ -86,11 +86,11 @@ public final class StoryMatcher extends BaseMatcher<Story> {
         }
         sum
             .append("\nXML before XSL transformation:\n  ")
-            .append(story.before().toString().replace("\n", "\n  "))
+            .append(xtory.before().toString().replace("\n", "\n  "))
             .append(
                 String.format(
                     "\nXML after XSL transformation (%d->%d chars):\n  ",
-                    story.before().toString().length(),
+                    xtory.before().toString().length(),
                     after.toString().length()
                 )
             )

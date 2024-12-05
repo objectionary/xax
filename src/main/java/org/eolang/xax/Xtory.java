@@ -24,20 +24,61 @@
 package org.eolang.xax;
 
 import com.jcabi.xml.XML;
+import com.yegor256.xsline.Xsline;
+import java.util.Collection;
+import java.util.Map;
 
 /**
- * A parser of a {@link String} to {@link XML}.
+ * A story about XML processed through XSL stylesheets.
  *
  * @since 0.4.0
  */
-public interface Parser {
+public interface Xtory {
 
     /**
-     * Parse the input.
-     * @param input The incoming data
-     * @return XML parsed
-     * @throws Exception If fails
+     * Get YAML as a map.
+     * @return The map
      */
-    XML parse(String input) throws Exception;
+    Map<String, Object> map();
 
+    /**
+     * Build input XML document.
+     * @return The XML
+     */
+    XML before();
+
+    /**
+     * The XML after transformations.
+     * @return The XML
+     */
+    XML after();
+
+    /**
+     * The transformation line.
+     * @return The line
+     */
+    Xsline xsline();
+
+    /**
+     * Full list of XPath asserts.
+     * @return List of XPath expressions
+     */
+    Collection<String> asserts();
+
+    /**
+     * A parser of a {@link String} to {@link XML}.
+     *
+     * @since 0.4.0
+     */
+    interface Parser {
+
+        /**
+         * Parse the input.
+         * @param input The incoming data
+         * @return XML parsed
+         * @throws Exception If fails
+         */
+        XML parse(String input) throws Exception;
+
+    }
 }
