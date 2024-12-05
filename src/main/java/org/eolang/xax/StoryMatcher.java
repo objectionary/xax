@@ -40,7 +40,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.function.Function;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.jupiter.api.Assumptions;
@@ -61,7 +60,7 @@ public final class StoryMatcher extends BaseMatcher<String> {
     /**
      * The parser to use, when {@code input} is provided in the YAML.
      */
-    private final Function<String, XML> parser;
+    private final StoryMatcher.Parser parser;
 
     /**
      * It must be strict on XML?
@@ -95,7 +94,7 @@ public final class StoryMatcher extends BaseMatcher<String> {
      * Ctor.
      * @param prsr The parser to use
      */
-    public StoryMatcher(final Function<String, XML> prsr) {
+    public StoryMatcher(final StoryMatcher.Parser prsr) {
         this(prsr, new TrDefault<>());
     }
 
@@ -105,7 +104,7 @@ public final class StoryMatcher extends BaseMatcher<String> {
      * @param trn The train to start with
      * @since 0.1.1
      */
-    public StoryMatcher(final Function<String, XML> prsr, final Train<Shift> trn) {
+    public StoryMatcher(final StoryMatcher.Parser prsr, final Train<Shift> trn) {
         this(prsr, trn, false);
     }
 
@@ -116,7 +115,7 @@ public final class StoryMatcher extends BaseMatcher<String> {
      * @param strct To be strict on XML?
      * @since 0.2.0
      */
-    public StoryMatcher(final Function<String, XML> prsr, final Train<Shift> trn,
+    public StoryMatcher(final StoryMatcher.Parser prsr, final Train<Shift> trn,
         final boolean strct) {
         super();
         this.parser = prsr;
@@ -204,11 +203,17 @@ public final class StoryMatcher extends BaseMatcher<String> {
      * @param yaml The YAML
      * @return The XML
      */
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     private XML before(final Map<String, Object> yaml) {
         final Object doc = yaml.get("document");
         final XML xml;
         if (doc == null) {
-            xml = this.parser.apply(yaml.get("input").toString());
+            try {
+                xml = this.parser.parse(yaml.get("input").toString());
+                // @checkstyle IllegalCatchCheck (1 line)
+            } catch (final Exception ex) {
+                throw new IllegalArgumentException(ex);
+            }
         } else {
             xml = new XMLDocument(doc.toString());
         }
@@ -256,6 +261,21 @@ public final class StoryMatcher extends BaseMatcher<String> {
             out = new StrictXML(xml);
         }
         return out;
+    }
+
+    /**
+     * The parser.
+     *
+     * @since 0.3.0
+     */
+    public interface Parser {
+        /**
+         * Parse the input.
+         * @param input The incoming data
+         * @return XML parsed
+         * @throws Exception If fails
+         */
+        XML parse(String input) throws Exception;
     }
 
 }
