@@ -23,7 +23,7 @@ You add this to your `pom.xml`:
 </dependency>
 ```
 
-Then, creat this XSL file in `src/main/resources/simple.xsl`:
+Then, create this XSL file in `src/main/resources/simple.xsl`:
 
 ```xml
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">

@@ -20,24 +20,34 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 ---
-architect:
-  - yegor256
-docker:
-  image: yegor256/rultor-java
-assets:
-  settings.xml: yegor256/objectionary-secrets#settings.xml
-  pubring.gpg: yegor256/objectionary-secrets#pubring.gpg
-  secring.gpg: yegor256/objectionary-secrets#secring.gpg
-install: |
-  pdd --file=/dev/null
-merge:
-  script: |
-    mvn clean install -Pqulice --errors -Dstyle.color=never
-release:
-  script: |-
-    [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
-    mvn versions:set "-DnewVersion=${tag}" -Dstyle.color=never
-    git commit -am "${tag}"
-    mvn clean install -Dinvoker.skip
-    export MAVEN_OPTS="--add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED"
-    mvn clean deploy -Pobjectionary -Psonatype --errors --settings ../settings.xml -Dstyle.color=never
+name: copyrights
+'on':
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  copyrights:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: yegor256/copyrights-action@0.0.5
+        with:
+          globs: >-
+            **/LICENSE.txt
+            **/*.sh
+            **/*.yml
+            **/*.yaml
+            **/*.eo
+            **/*.xmir
+            **/*.xml
+            **/*.xsl
+            **/*.xsd
+            **/*.ini
+            **/*.java
+            **/*.g4
+            **/*.properties
+            **/*.toml
+            **/*.groovy
