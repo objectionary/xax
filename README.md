@@ -1,3 +1,5 @@
+# JUnit Matcher for XSL Transformations
+
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 [![DevOps By Rultor.com](http://www.rultor.com/b/objectionary/xax)](http://www.rultor.com/p/objectionary/xax)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
@@ -8,7 +10,6 @@
 [![Javadoc](http://www.javadoc.io/badge/org.eolang/xax.svg)](http://www.javadoc.io/doc/org.eolang/xax)
 [![codecov](https://codecov.io/gh/objectionary/xax/branch/master/graph/badge.svg)](https://codecov.io/gh/objectionary/xax)
 [![Hits-of-Code](https://hitsofcode.com/github/objectionary/xax)](https://hitsofcode.com/view/github/objectionary/xax)
-![Lines of code](https://img.shields.io/tokei/lines/github/objectionary/xax)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/objectionary/xax/blob/master/LICENSE.txt)
 
 This simple library can help you test your XSL stylesheets against different XML
@@ -81,13 +82,14 @@ Should work.
 
 ## How to Contribute
 
-Fork repository, make changes, send us a [pull request](https://www.yegor256.com/2014/04/15/github-guidelines.html).
+Fork repository, make changes, send us a
+[pull request](https://www.yegor256.com/2014/04/15/github-guidelines.html).
 We will review your changes and apply them to the `master` branch shortly,
 provided they don't violate our quality standards. To avoid frustration,
 before sending us your pull request please run full Maven build:
 
 ```bash
-$ mvn clean install -Pqulice
+mvn clean install -Pqulice
 ```
 
 You will need Maven 3.3+ and Java 8+.
