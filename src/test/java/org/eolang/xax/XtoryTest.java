@@ -38,7 +38,7 @@ final class XtoryTest {
 
     @Test
     void parsesAndTransforms() throws Exception {
-        final Xtory xtory = new YamlXtory(
+        final Xtory xtory = new XtYaml(
             new TextOf(
                 new ResourceOf("org/eolang/xax/packs/simple.yaml")
             ).asString()

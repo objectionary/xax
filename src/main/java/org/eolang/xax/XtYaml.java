@@ -46,7 +46,7 @@ import org.yaml.snakeyaml.Yaml;
  *
  * @since 0.1.0
  */
-public final class YamlXtory implements Xtory {
+public final class XtYaml implements Xtory {
 
     /**
      * The YAML to work with.
@@ -67,7 +67,7 @@ public final class YamlXtory implements Xtory {
      * Ctor.
      * @param yml The story in YAML
      */
-    public YamlXtory(final String yml) {
+    public XtYaml(final String yml) {
         this(
             yml,
             input -> {
@@ -83,7 +83,7 @@ public final class YamlXtory implements Xtory {
      * @param yml The story in YAML
      * @param prsr The parser to use
      */
-    public YamlXtory(final String yml, final Parser prsr) {
+    public XtYaml(final String yml, final Parser prsr) {
         this(yml, prsr, new TrDefault<>());
     }
 
@@ -94,7 +94,7 @@ public final class YamlXtory implements Xtory {
      * @param trn The train to start with
      * @since 0.1.1
      */
-    public YamlXtory(final String yml, final Parser prsr, final Train<Shift> trn) {
+    public XtYaml(final String yml, final Parser prsr, final Train<Shift> trn) {
         this.yaml = yml;
         this.parser = prsr;
         this.train = trn;

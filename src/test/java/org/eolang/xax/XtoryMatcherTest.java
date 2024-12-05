@@ -45,7 +45,7 @@ final class XtoryMatcherTest {
     void printsItself() {
         MatcherAssert.assertThat(
             "finds errors in the story",
-            new YamlXtory(
+            new XtYaml(
                 new UncheckedText(
                     new TextOf(
                         new ResourceOf("org/eolang/xax/packs/simple.yaml")
@@ -61,7 +61,7 @@ final class XtoryMatcherTest {
     void validatesSimpleScenario(final String yaml) {
         MatcherAssert.assertThat(
             "passes with no exceptions",
-            new YamlXtory(
+            new XtYaml(
                 yaml,
                 eo -> new EoSyntax(new InputOf(eo)).parsed()
             ),
@@ -74,7 +74,7 @@ final class XtoryMatcherTest {
     void validatesBrokenScenario(final String yaml) {
         MatcherAssert.assertThat(
             "reports ",
-            new YamlXtory(yaml),
+            new XtYaml(yaml),
             Matchers.not(new XtoryMatcher())
         );
     }
