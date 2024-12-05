@@ -149,6 +149,7 @@ SOFTWARE.
       <groupId>org.eolang</groupId>
       <artifactId>eo-parser</artifactId>
       <version>0.46.0</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
   <profiles>
