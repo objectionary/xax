@@ -82,6 +82,13 @@ public final class XtSticky implements Xtory {
         return this.through("asserts", this.origin::asserts);
     }
 
+    /**
+     * Through the cache.
+     * @param method The method
+     * @param supplier The supplier
+     * @return The object calculated
+     * @param <T> Type of the object
+     */
     @SuppressWarnings("unchecked")
     private <T> T through(final String method, final Supplier<T> supplier) {
         return (T) this.cache.computeIfAbsent(
