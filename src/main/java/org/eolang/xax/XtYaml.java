@@ -113,8 +113,14 @@ public final class XtYaml implements Xtory {
         final Object doc = this.map().get("document");
         final XML xml;
         if (doc == null) {
+            final Object input = this.map().get("input");
+            if (input == null) {
+                throw new IllegalArgumentException(
+                    "Neither 'document' nor 'input' exists in the YAML"
+                );
+            }
             try {
-                xml = this.parser.parse(this.map().get("input").toString());
+                xml = this.parser.parse(input.toString());
                 // @checkstyle IllegalCatchCheck (1 line)
             } catch (final Exception ex) {
                 throw new IllegalArgumentException(ex);

@@ -86,8 +86,8 @@ public final class XtSticky implements Xtory {
      * Through the cache.
      * @param method The method
      * @param supplier The supplier
-     * @return The object calculated
      * @param <T> Type of the object
+     * @return The object calculated
      */
     @SuppressWarnings("unchecked")
     private <T> T through(final String method, final Supplier<T> supplier) {
