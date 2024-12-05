@@ -55,7 +55,7 @@ asserts:
 
 Finally, make a unit test (using
 [JUnit5](https://github.com/junit-team/junit5),
-[Hamcrest](https://github.com/hamcrest/JavaHamcrest), 
+[Hamcrest](https://github.com/hamcrest/JavaHamcrest),
 and `@ClasspathSource` from [Jucs](https://github.com/objectionary/jucs)):
 
 ```java
