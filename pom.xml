@@ -116,6 +116,18 @@ SOFTWARE.
       <scope>runtime</scope>
     </dependency>
     <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+      <version>1.4.01</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.jcabi</groupId>
+      <artifactId>jcabi-matchers</artifactId>
+      <version>1.8.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.cactoos</groupId>
       <artifactId>cactoos</artifactId>
       <version>0.56.1</version>

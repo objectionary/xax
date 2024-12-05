@@ -23,59 +23,30 @@
  */
 package org.eolang.xax;
 
-import org.cactoos.io.InputOf;
+import com.jcabi.matchers.XhtmlMatchers;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.UncheckedText;
-import org.eolang.jucs.ClasspathSource;
-import org.eolang.parser.EoSyntax;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 
 /**
- * Test case for {@link StoryMatcher}.
+ * Test case for {@link Story}.
  *
  * @since 0.1.0
  */
-final class StoryMatcherTest {
+final class StoryTest {
 
     @Test
-    void printsItself() {
-        MatcherAssert.assertThat(
-            "finds errors in the story",
-            new YamlStory(
-                new UncheckedText(
-                    new TextOf(
-                        new ResourceOf("org/eolang/xax/packs/simple.yaml")
-                    )
-                ).asString()
-            ),
-            new StoryMatcher()
+    void parsesAndTransforms() throws Exception {
+        final Story story = new YamlStory(
+            new TextOf(
+                new ResourceOf("org/eolang/xax/packs/simple.yaml")
+            ).asString()
         );
-    }
-
-    @ParameterizedTest
-    @ClasspathSource(value = "org/eolang/xax/packs", glob = "**.yaml")
-    void validatesSimpleScenario(final String yaml) {
         MatcherAssert.assertThat(
             "passes with no exceptions",
-            new YamlStory(
-                yaml,
-                eo -> new EoSyntax(new InputOf(eo)).parsed()
-            ),
-            new StoryMatcher()
-        );
-    }
-
-    @ParameterizedTest
-    @ClasspathSource(value = "org/eolang/xax/broken", glob = "**.yaml")
-    void validatesBrokenScenario(final String yaml) {
-        MatcherAssert.assertThat(
-            "reports ",
-            new YamlStory(yaml),
-            Matchers.not(new StoryMatcher())
+            XhtmlMatchers.xhtml(story.after()),
+            XhtmlMatchers.hasXPaths(story.asserts())
         );
     }
 
