@@ -73,12 +73,24 @@ public final class XtStrict implements Xtory {
 
     @Override
     public XML before() {
-        return new StrictXML(this.origin.before(), this.schema);
+        XML out = this.origin.before();
+        if (this.schema == null) {
+            out = new StrictXML(out);
+        } else {
+            out = new StrictXML(out, this.schema);
+        }
+        return out;
     }
 
     @Override
     public XML after() {
-        return new StrictXML(this.origin.after(), this.schema);
+        XML out = this.origin.after();
+        if (this.schema == null) {
+            out = new StrictXML(out);
+        } else {
+            out = new StrictXML(out, this.schema);
+        }
+        return out;
     }
 
     @Override
