@@ -90,8 +90,19 @@ public final class StoryMatcher extends BaseMatcher<String> {
      * @param prsr The parser to use
      */
     public StoryMatcher(final Function<String, XML> prsr) {
+        this(prsr, new TrDefault<>());
+    }
+
+    /**
+     * Ctor.
+     * @param prsr The parser to use
+     * @param trn The train to start with
+     * @since 0.1.1
+     */
+    public StoryMatcher(final Function<String, XML> prsr, final Train<Shift> trn) {
+        super();
         this.parser = prsr;
-        this.train = new TrDefault<>();
+        this.train = trn;
     }
 
     @Override
