@@ -23,6 +23,7 @@
  */
 package org.eolang.xax;
 
+import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import com.jcabi.xml.XSLDocument;
@@ -63,6 +64,11 @@ public final class StoryMatcher extends BaseMatcher<String> {
     private final Function<String, XML> parser;
 
     /**
+     * It must be strict on XML?
+     */
+    private final boolean strict;
+
+    /**
      * The header of the match.
      */
     private String header;
@@ -100,9 +106,22 @@ public final class StoryMatcher extends BaseMatcher<String> {
      * @since 0.1.1
      */
     public StoryMatcher(final Function<String, XML> prsr, final Train<Shift> trn) {
+        this(prsr, trn, false);
+    }
+
+    /**
+     * Ctor.
+     * @param prsr The parser to use
+     * @param trn The train to start with
+     * @param strct To be strict on XML?
+     * @since 0.1.1
+     */
+    public StoryMatcher(final Function<String, XML> prsr, final Train<Shift> trn,
+        final boolean strct) {
         super();
         this.parser = prsr;
         this.train = trn;
+        this.strict = strct;
     }
 
     @Override
@@ -113,7 +132,7 @@ public final class StoryMatcher extends BaseMatcher<String> {
         );
         Assumptions.assumeTrue(yaml.get("skip") == null);
         final XML before = this.before(yaml);
-        final XML after = this.xsline(yaml).pass(before);
+        final XML after = this.valid(this.xsline(yaml).pass(before));
         Object asserts = yaml.get("asserts");
         if (asserts == null) {
             asserts = Arrays.asList();
@@ -193,7 +212,7 @@ public final class StoryMatcher extends BaseMatcher<String> {
         } else {
             xml = new XMLDocument(doc.toString());
         }
-        return xml;
+        return this.valid(xml);
     }
 
     /**
@@ -224,6 +243,19 @@ public final class StoryMatcher extends BaseMatcher<String> {
             }
         }
         return new Xsline(trn);
+    }
+
+    /**
+     * Build XML that is ready for processing.
+     * @param xml Original XML
+     * @return The XML after validation
+     */
+    private XML valid(final XML xml) {
+        XML out = xml;
+        if (this.strict) {
+            out = new StrictXML(xml);
+        }
+        return out;
     }
 
 }
