@@ -42,6 +42,7 @@ final class XaxStoryTest {
     @Test
     void printsItself() {
         MatcherAssert.assertThat(
+            "passes with no exceptions",
             new XaxStory(
                 new UncheckedText(
                     new TextOf(
@@ -63,6 +64,7 @@ final class XaxStoryTest {
     @ClasspathSource(value = "org/eolang/xax/packs", glob = "**.yaml")
     void validatesSimpleScenario(final String yaml) {
         MatcherAssert.assertThat(
+            "passes with no exceptions",
             new XaxStory(yaml),
             Matchers.is(true)
         );
@@ -72,6 +74,7 @@ final class XaxStoryTest {
     @ClasspathSource(value = "org/eolang/xax/broken", glob = "**.yaml")
     void validatesBrokenScenario(final String yaml) {
         MatcherAssert.assertThat(
+            "passes with no exceptions",
             new XaxStory(yaml),
             Matchers.not(Matchers.is(true))
         );
