@@ -140,6 +140,12 @@ SOFTWARE.
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>com.yegor256</groupId>
+      <artifactId>jping</artifactId>
+      <version>0.0.3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.eolang</groupId>
       <artifactId>eo-parser</artifactId>
       <version>0.46.0</version>
