@@ -114,7 +114,7 @@ public final class StoryMatcher extends BaseMatcher<String> {
      * @param prsr The parser to use
      * @param trn The train to start with
      * @param strct To be strict on XML?
-     * @since 0.1.1
+     * @since 0.2.0
      */
     public StoryMatcher(final Function<String, XML> prsr, final Train<Shift> trn,
         final boolean strct) {
