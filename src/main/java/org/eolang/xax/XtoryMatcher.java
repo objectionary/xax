@@ -59,12 +59,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
         int failures = 0;
         for (final String xpath : xtory.asserts()) {
             final boolean success = !after.nodes(xpath).isEmpty();
-            xpaths.add(
-                new AbstractMap.SimpleImmutableEntry<>(
-                    xpath,
-                    success
-                )
-            );
+            xpaths.add(new AbstractMap.SimpleImmutableEntry<>(xpath, success));
             if (!success) {
                 ++failures;
             }
