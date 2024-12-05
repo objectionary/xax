@@ -23,7 +23,8 @@
 sheets: []
 document: |
   <program xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-    xsi:noNamespaceSchemaLocation='https://www.eolang.org/xsd/XMIR-0.46.0.xsd'>
+    xsi:noNamespaceSchemaLocation='https://www.eolang.org/xsd/XMIR-0.46.0.xsd'
+    name='foo'>
     <objects/>
   </program>
 asserts:
