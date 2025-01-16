@@ -35,6 +35,7 @@ merge:
     mvn clean install -Pqulice --errors -Dstyle.color=never
 release:
   pre: false
+  # yamllint disable rule:line-length
   script: |-
     [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
     mvn versions:set "-DnewVersion=${tag}" -Dstyle.color=never
