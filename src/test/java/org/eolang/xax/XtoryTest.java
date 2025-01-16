@@ -44,7 +44,7 @@ final class XtoryTest {
             ).asString()
         );
         MatcherAssert.assertThat(
-            "passes with no exceptions",
+            "Fails to find expected XPaths",
             XhtmlMatchers.xhtml(xtory.after()),
             XhtmlMatchers.hasXPaths(xtory.asserts())
         );

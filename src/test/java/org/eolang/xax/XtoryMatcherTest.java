@@ -23,6 +23,7 @@
  */
 package org.eolang.xax;
 
+import com.jcabi.matchers.XhtmlMatchers;
 import org.cactoos.io.InputOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.TextOf;
@@ -44,7 +45,7 @@ final class XtoryMatcherTest {
     @Test
     void printsItself() {
         MatcherAssert.assertThat(
-            "finds errors in the story",
+            "No errors found in the story",
             new XtYaml(
                 new UncheckedText(
                     new TextOf(
@@ -53,6 +54,42 @@ final class XtoryMatcherTest {
                 ).asString()
             ),
             new XtoryMatcher()
+        );
+    }
+
+    @Test
+    void appliesExtraMatcher() {
+        MatcherAssert.assertThat(
+            "Extra matcher is not applied",
+            new XtYaml(
+                new UncheckedText(
+                    new TextOf(
+                        new ResourceOf("org/eolang/xax/packs/simple.yaml")
+                    )
+                ).asString()
+            ),
+            new XtoryMatcher(
+                XhtmlMatchers.hasXPath("/doc/a/foo")
+            )
+        );
+    }
+
+    @Test
+    void appliesExtraMatcherAndFails() {
+        MatcherAssert.assertThat(
+            "Extra matcher is not applied",
+            new XtYaml(
+                new UncheckedText(
+                    new TextOf(
+                        new ResourceOf("org/eolang/xax/packs/simple.yaml")
+                    )
+                ).asString()
+            ),
+            Matchers.not(
+                new XtoryMatcher(
+                    XhtmlMatchers.hasXPath("/invalid-xpath")
+                )
+            )
         );
     }
 
