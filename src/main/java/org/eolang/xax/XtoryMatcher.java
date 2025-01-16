@@ -52,6 +52,11 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
     private String summary;
 
     /**
+     * Did it match?
+     */
+    private boolean match;
+
+    /**
      * Extra matcher for the outcoming XML.
      * @since 0.6.0
      */
@@ -129,26 +134,32 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
             )
             .append(after.toString().replace("\n", "\n  "));
         this.summary = sum.toString();
-        boolean match = true;
+        this.match = true;
         for (final Map.Entry<String, Boolean> ent : xpaths) {
             if (!ent.getValue()) {
-                match = false;
+                this.match = false;
                 break;
             }
         }
-        return match && this.extra.matches(after);
+        return this.match && this.extra.matches(after);
     }
 
     @Override
     public void describeTo(final Description desc) {
-        desc.appendText(this.header);
-        this.extra.describeTo(desc);
+        if (this.match) {
+            this.extra.describeTo(desc);
+        } else {
+            desc.appendText(this.header);
+        }
     }
 
     @Override
     public void describeMismatch(final Object story, final Description desc) {
-        desc.appendText("\n").appendText(this.summary);
-        this.extra.describeMismatch(story, desc);
+        if (this.match) {
+            this.extra.describeMismatch(story, desc);
+        } else {
+            desc.appendText("\n").appendText(this.summary);
+        }
     }
 
 }
