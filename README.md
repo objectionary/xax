@@ -21,7 +21,7 @@ You add this to your `pom.xml`:
 <dependency>
   <groupId>org.eolang</groupId>
   <artifactId>xax</artifactId>
-  <version>0.6.0</version>
+  <version>0.6.1</version>
 </dependency>
 ```
 
