@@ -53,11 +53,13 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
 
     /**
      * Extra matcher for the outcoming XML.
+     * @since 0.6.0
      */
     private final Matcher<XML> extra;
 
     /**
      * Default ctor.
+     * @since 0.6.0
      */
     XtoryMatcher() {
         this(
@@ -78,6 +80,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
     /**
      * With an extra matcher.
      * @param ext Extra matcher
+     * @since 0.6.0
      */
     XtoryMatcher(final Matcher<XML> ext) {
         super();
