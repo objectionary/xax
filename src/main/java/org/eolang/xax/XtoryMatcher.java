@@ -61,7 +61,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
      * Default ctor.
      * @since 0.6.0
      */
-    XtoryMatcher() {
+    public XtoryMatcher() {
         this(
             new BaseMatcher<XML>() {
                 @Override
@@ -82,7 +82,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
      * @param ext Extra matcher
      * @since 0.6.0
      */
-    XtoryMatcher(final Matcher<XML> ext) {
+    public XtoryMatcher(final Matcher<XML> ext) {
         super();
         this.extra = ext;
     }
