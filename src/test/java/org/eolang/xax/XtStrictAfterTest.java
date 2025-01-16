@@ -49,7 +49,7 @@ final class XtStrictAfterTest {
             )
         );
         MatcherAssert.assertThat(
-            "passes with no exceptions",
+            "Fails to pass",
             XhtmlMatchers.xhtml(xtory.after()),
             XhtmlMatchers.hasXPaths(xtory.asserts())
         );

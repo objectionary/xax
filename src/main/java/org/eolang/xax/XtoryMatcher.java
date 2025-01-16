@@ -30,6 +30,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.jupiter.api.Assumptions;
 
 /**
@@ -37,6 +38,7 @@ import org.junit.jupiter.api.Assumptions;
  *
  * @since 0.1.0
  */
+@SuppressWarnings("PMD.ConstructorShouldDoInitialization")
 public final class XtoryMatcher extends BaseMatcher<Xtory> {
 
     /**
@@ -48,6 +50,42 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
      * The summary of the match.
      */
     private String summary;
+
+    /**
+     * Extra matcher for the outcoming XML.
+     * @since 0.6.0
+     */
+    private final Matcher<XML> extra;
+
+    /**
+     * Default ctor.
+     * @since 0.6.0
+     */
+    XtoryMatcher() {
+        this(
+            new BaseMatcher<XML>() {
+                @Override
+                public boolean matches(final Object input) {
+                    return true;
+                }
+
+                @Override
+                public void describeTo(final Description description) {
+                    assert description != null;
+                }
+            }
+        );
+    }
+
+    /**
+     * With an extra matcher.
+     * @param ext Extra matcher
+     * @since 0.6.0
+     */
+    XtoryMatcher(final Matcher<XML> ext) {
+        super();
+        this.extra = ext;
+    }
 
     @Override
     public boolean matches(final Object object) {
@@ -98,17 +136,19 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
                 break;
             }
         }
-        return match;
+        return match && this.extra.matches(after);
     }
 
     @Override
     public void describeTo(final Description desc) {
         desc.appendText(this.header);
+        this.extra.describeTo(desc);
     }
 
     @Override
     public void describeMismatch(final Object story, final Description desc) {
         desc.appendText("\n").appendText(this.summary);
+        this.extra.describeMismatch(story, desc);
     }
 
 }
