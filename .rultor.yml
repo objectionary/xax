@@ -5,7 +5,7 @@
 architect:
   - yegor256
 docker:
-  image: yegor256/rultor-java
+  image: yegor256/java
 assets:
   settings.xml: yegor256/objectionary-secrets#settings.xml
   pubring.gpg: yegor256/objectionary-secrets#pubring.gpg
