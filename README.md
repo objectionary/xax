@@ -1,13 +1,13 @@
 # JUnit Matcher for XSL Transformations
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
-[![DevOps By Rultor.com](http://www.rultor.com/b/objectionary/xax)](http://www.rultor.com/p/objectionary/xax)
+[![DevOps By Rultor.com](https://www.rultor.com/b/objectionary/xax)](https://www.rultor.com/p/objectionary/xax)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![mvn](https://github.com/objectionary/xax/actions/workflows/mvn.yml/badge.svg)](https://github.com/objectionary/xax/actions/workflows/mvn.yml)
-[![PDD status](http://www.0pdd.com/svg?name=objectionary/xax)](http://www.0pdd.com/p?name=objectionary/xax)
+[![PDD status](https://www.0pdd.com/svg?name=objectionary/xax)](https://www.0pdd.com/p?name=objectionary/xax)
 [![Maven Central](https://img.shields.io/maven-central/v/org.eolang/xax.svg)](https://maven-badges.herokuapp.com/maven-central/org.eolang/xax)
-[![Javadoc](http://www.javadoc.io/badge/org.eolang/xax.svg)](http://www.javadoc.io/doc/org.eolang/xax)
+[![Javadoc](https://www.javadoc.io/badge/org.eolang/xax.svg)](https://www.javadoc.io/doc/org.eolang/xax)
 [![codecov](https://codecov.io/gh/objectionary/xax/branch/master/graph/badge.svg)](https://codecov.io/gh/objectionary/xax)
 [![Hits-of-Code](https://hitsofcode.com/github/objectionary/xax)](https://hitsofcode.com/view/github/objectionary/xax)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/objectionary/xax/blob/master/LICENSE.txt)
