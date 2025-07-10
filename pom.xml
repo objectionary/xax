@@ -76,7 +76,7 @@
     <dependency>
       <groupId>org.cactoos</groupId>
       <artifactId>cactoos</artifactId>
-      <version>0.56.1</version>
+      <version>0.57.0</version>
     </dependency>
     <dependency>
       <groupId>com.yegor256</groupId>
@@ -98,13 +98,13 @@
     <dependency>
       <groupId>net.sf.saxon</groupId>
       <artifactId>Saxon-HE</artifactId>
-      <version>12.5</version>
+      <version>12.8</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>xml-apis</groupId>
       <artifactId>xml-apis</artifactId>
-      <version>2.0.2</version>
+      <version>1.0.b2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -137,7 +137,7 @@
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
-        <version>1.18.2</version>
+        <version>1.20.0</version>
         <executions>
           <execution>
             <goals>
@@ -154,7 +154,7 @@
           <dependency>
             <groupId>org.pitest</groupId>
             <artifactId>pitest-junit5-plugin</artifactId>
-            <version>1.2.1</version>
+            <version>1.2.3</version>
           </dependency>
         </dependencies>
       </plugin>
