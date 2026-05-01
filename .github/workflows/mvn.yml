@@ -34,3 +34,18 @@ jobs:
       - run: java -version
       - run: mvn -version
       - run: mvn --errors --batch-mode clean install -Pqulice
+      - name: Dump test and pit reports on failure
+        if: failure()
+        shell: bash
+        run: |
+          set +e
+          echo "=== surefire reports ==="
+          for f in target/surefire-reports/*.txt target/surefire-reports/*.xml; do
+            [ -f "$f" ] || continue
+            echo "--- $f ---"
+            cat "$f"
+          done
+          echo "=== pit-reports/index.html ==="
+          [ -f target/pit-reports/index.html ] && cat target/pit-reports/index.html | head -200
+          echo "=== qulice/checkstyle reports ==="
+          find target -name "*.txt" -path "*qulice*" -exec cat {} \;
