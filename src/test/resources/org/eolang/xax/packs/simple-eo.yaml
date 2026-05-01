@@ -4,7 +4,5 @@
 input: |
   # No comments.
   [] > foo
-    QQ.io.stdout > @
-      "Hello, world!"
 asserts:
-  - /program/objects/o
+  - /object/o[@name='foo']
