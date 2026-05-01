@@ -43,9 +43,9 @@ jobs:
           for f in target/surefire-reports/*.txt target/surefire-reports/*.xml; do
             [ -f "$f" ] || continue
             echo "--- $f ---"
-            cat "$f"
+            cat -- "$f"
           done
           echo "=== pit-reports/index.html ==="
-          [ -f target/pit-reports/index.html ] && cat target/pit-reports/index.html | head -200
-          echo "=== qulice/checkstyle reports ==="
-          find target -name "*.txt" -path "*qulice*" -exec cat {} \;
+          [ -f target/pit-reports/index.html ] && head -200 target/pit-reports/index.html
+          echo "=== qulice reports ==="
+          find target -name "*.txt" -path "*qulice*" -exec cat -- {} \;
