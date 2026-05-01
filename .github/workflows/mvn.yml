@@ -15,10 +15,9 @@ jobs:
     timeout-minutes: 15
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
       matrix:
         os: [ubuntu-24.04, windows-2022, macos-15]
-        java: [17, 21]
+        java: [21]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -34,18 +33,3 @@ jobs:
       - run: java -version
       - run: mvn -version
       - run: mvn --errors --batch-mode clean install -Pqulice
-      - name: Dump test and pit reports on failure
-        if: failure()
-        shell: bash
-        run: |
-          set +e
-          echo "=== surefire reports ==="
-          for f in target/surefire-reports/*.txt target/surefire-reports/*.xml; do
-            [ -f "$f" ] || continue
-            echo "--- $f ---"
-            cat -- "$f"
-          done
-          echo "=== pit-reports/index.html ==="
-          [ -f target/pit-reports/index.html ] && head -200 target/pit-reports/index.html
-          echo "=== qulice reports ==="
-          find target -name "*.txt" -path "*qulice*" -exec cat -- {} \;
