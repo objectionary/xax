@@ -3,8 +3,8 @@
 ---
 input: |
   # No comments.
-  [] > foo
-    QQ.io.stdout > @
-      "Hello, world!"
+  [x] > foo
+    x > @
 asserts:
-  - /program/objects/o
+  - /object[not(errors)]
+  - //o[@name='foo']

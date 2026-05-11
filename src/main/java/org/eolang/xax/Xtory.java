@@ -11,7 +11,6 @@ import java.util.Map;
 
 /**
  * A story about XML processed through XSL stylesheets.
- *
  * @since 0.4.0
  */
 public interface Xtory {
@@ -48,9 +47,9 @@ public interface Xtory {
 
     /**
      * A parser of a {@link String} to {@link XML}.
-     *
      * @since 0.4.0
      */
+    @FunctionalInterface
     interface Parser {
 
         /**
@@ -60,6 +59,5 @@ public interface Xtory {
          * @throws Exception If fails
          */
         XML parse(String input) throws Exception;
-
     }
 }

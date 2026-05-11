@@ -13,7 +13,7 @@ import com.yegor256.xsline.StXSL;
 import com.yegor256.xsline.TrDefault;
 import com.yegor256.xsline.Train;
 import com.yegor256.xsline.Xsline;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,7 +24,6 @@ import org.yaml.snakeyaml.Yaml;
 /**
  * A story parsed from YAML and then processed through XSL
  * stylesheets.
- *
  * @since 0.1.0
  */
 public final class XtYaml implements Xtory {
@@ -133,7 +132,7 @@ public final class XtYaml implements Xtory {
                             new XSLDocument(Paths.get(sheet.substring(7)))
                         )
                     );
-                } catch (final FileNotFoundException ex) {
+                } catch (final IOException ex) {
                     throw new IllegalArgumentException(ex);
                 }
             } else {
@@ -156,5 +155,4 @@ public final class XtYaml implements Xtory {
         }
         return xpaths;
     }
-
 }
