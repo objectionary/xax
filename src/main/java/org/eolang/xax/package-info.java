@@ -5,7 +5,6 @@
 
 /**
  * XPath Assertions for XSL.
- *
  * @since 0.0.1
  */
 package org.eolang.xax;

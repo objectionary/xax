@@ -14,13 +14,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  * Test case for {@link XtStrict}.
- *
  * @since 0.1.0
  */
 final class XtStrictTest {
 
     @Test
     @ExtendWith(WeAreOnline.class)
+    @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
     void parsesAndTransforms() throws Exception {
         final Xtory xtory = new XtStrict(
             new XtYaml(
@@ -35,5 +35,4 @@ final class XtStrictTest {
             XhtmlMatchers.hasXPaths(xtory.asserts())
         );
     }
-
 }

@@ -6,8 +6,8 @@ package org.eolang.xax;
 
 import com.jcabi.xml.XML;
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Map;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -16,10 +16,8 @@ import org.junit.jupiter.api.Assumptions;
 
 /**
  * Hamcrest matcher for a YAML story.
- *
  * @since 0.1.0
  */
-@SuppressWarnings("PMD.ConstructorShouldDoInitialization")
 public final class XtoryMatcher extends BaseMatcher<Xtory> {
 
     /**
@@ -79,7 +77,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
         Assumptions.assumeTrue(xtory.map().get("skip") == null);
         final XML after = xtory.xsline().pass(xtory.before());
         final Collection<Map.Entry<String, Boolean>> xpaths =
-            new LinkedList<>();
+            new ArrayList<>(0);
         int failures = 0;
         for (final String xpath : xtory.asserts()) {
             final boolean success = !after.nodes(xpath).isEmpty();
@@ -92,8 +90,10 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
             "All %d XPath expressions matched",
             xpaths.size()
         );
-        final StringBuilder sum = new StringBuilder(1024)
-            .append(String.format("%d XPath expression(s) failed:\n", failures));
+        final String sep = System.lineSeparator();
+        final StringBuilder sum = new StringBuilder(1024).append(
+            String.format("%d XPath expression(s) failed:%n", failures)
+        );
         for (final Map.Entry<String, Boolean> ent : xpaths) {
             sum.append("  ");
             if (ent.getValue()) {
@@ -101,19 +101,19 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
             } else {
                 sum.append("FAIL");
             }
-            sum.append(": ").append(ent.getKey()).append('\n');
+            sum.append(": ").append(ent.getKey()).append(sep);
         }
-        sum
-            .append("\nXML before XSL transformation:\n  ")
-            .append(xtory.before().toString().replace("\n", "\n  "))
-            .append(
+        final String before = xtory.before().toString();
+        final String later = after.toString();
+        sum.append(sep).append("XML before XSL transformation:").append(sep)
+            .append("  ").append(before.replace(sep, sep.concat("  ")))
+            .append(sep).append(
                 String.format(
-                    "\nXML after XSL transformation (%d->%d chars):\n  ",
-                    xtory.before().toString().length(),
-                    after.toString().length()
+                    "XML after XSL transformation (%d->%d chars):",
+                    before.length(),
+                    later.length()
                 )
-            )
-            .append(after.toString().replace("\n", "\n  "));
+            ).append(sep).append("  ").append(later.replace(sep, sep.concat("  ")));
         this.summary = sum.toString();
         this.match = true;
         for (final Map.Entry<String, Boolean> ent : xpaths) {
@@ -139,8 +139,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
         if (this.match) {
             this.extra.describeMismatch(story, desc);
         } else {
-            desc.appendText("\n").appendText(this.summary);
+            desc.appendText(System.lineSeparator()).appendText(this.summary);
         }
     }
-
 }
