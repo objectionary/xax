@@ -14,7 +14,6 @@ import java.util.Map;
  * A decorator of {@link Xtory} that checks the validity
  * of XML against the XSD schema attached to it, right before
  * returning it at {@link Xtory#after()}.
- *
  * @since 0.4.0
  */
 public final class XtStrictAfter implements Xtory {

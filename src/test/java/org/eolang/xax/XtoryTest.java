@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Xtory}.
- *
  * @since 0.1.0
  */
 final class XtoryTest {
 
     @Test
+    @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
     void parsesAndTransforms() throws Exception {
         final Xtory xtory = new XtYaml(
             new TextOf(
@@ -30,5 +30,4 @@ final class XtoryTest {
             XhtmlMatchers.hasXPaths(xtory.asserts())
         );
     }
-
 }
