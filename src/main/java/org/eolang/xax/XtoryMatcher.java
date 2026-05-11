@@ -6,8 +6,8 @@ package org.eolang.xax;
 
 import com.jcabi.xml.XML;
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Map;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -77,7 +77,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
         Assumptions.assumeTrue(xtory.map().get("skip") == null);
         final XML after = xtory.xsline().pass(xtory.before());
         final Collection<Map.Entry<String, Boolean>> xpaths =
-            new LinkedList<>();
+            new ArrayList<>(0);
         int failures = 0;
         for (final String xpath : xtory.asserts()) {
             final boolean success = !after.nodes(xpath).isEmpty();

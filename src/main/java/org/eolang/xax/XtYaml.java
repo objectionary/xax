@@ -15,9 +15,9 @@ import com.yegor256.xsline.Train;
 import com.yegor256.xsline.Xsline;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 
@@ -149,7 +149,7 @@ public final class XtYaml implements Xtory {
         if (asserts == null) {
             asserts = Arrays.asList();
         }
-        final Collection<String> xpaths = new LinkedList<>();
+        final Collection<String> xpaths = new ArrayList<>(0);
         for (final String xpath : (Iterable<String>) asserts) {
             xpaths.add(xpath);
         }
