@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 final class XtStickyTest {
 
     @Test
-    @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
     void parsesAndTransforms() throws Exception {
         final Xtory xtory = new XtSticky(
             new XtYaml(

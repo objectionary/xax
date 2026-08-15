@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 final class XtoryTest {
 
     @Test
-    @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
     void parsesAndTransforms() throws Exception {
         final Xtory xtory = new XtYaml(
             new TextOf(

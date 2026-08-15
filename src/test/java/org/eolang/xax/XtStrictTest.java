@@ -20,7 +20,6 @@ final class XtStrictTest {
 
     @Test
     @ExtendWith(WeAreOnline.class)
-    @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
     void parsesAndTransforms() throws Exception {
         final Xtory xtory = new XtStrict(
             new XtYaml(
