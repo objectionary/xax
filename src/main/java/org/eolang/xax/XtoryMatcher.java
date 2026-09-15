@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Assumptions;
 
 /**
  * Hamcrest matcher for a YAML story.
+ *
  * @since 0.1.0
  */
 public final class XtoryMatcher extends BaseMatcher<Xtory> {
@@ -37,12 +38,14 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
 
     /**
      * Extra matcher for the outcoming XML.
+     *
      * @since 0.6.0
      */
     private final Matcher<XML> extra;
 
     /**
      * Default ctor.
+     *
      * @since 0.6.0
      */
     public XtoryMatcher() {
@@ -63,6 +66,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
 
     /**
      * With an extra matcher.
+     *
      * @param ext Extra matcher
      * @since 0.6.0
      */

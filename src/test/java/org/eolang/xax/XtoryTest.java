@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Xtory}.
+ *
  * @since 0.1.0
  */
 final class XtoryTest {

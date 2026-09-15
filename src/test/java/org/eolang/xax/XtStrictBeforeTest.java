@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  * Test case for {@link XtStrictBefore}.
+ *
  * @since 0.1.0
  */
 final class XtStrictBeforeTest {

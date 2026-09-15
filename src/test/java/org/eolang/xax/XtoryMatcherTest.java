@@ -18,6 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 
 /**
  * Test case for {@link XtoryMatcher}.
+ *
  * @since 0.1.0
  */
 final class XtoryMatcherTest {

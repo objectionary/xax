@@ -24,6 +24,7 @@ import org.yaml.snakeyaml.Yaml;
 /**
  * A story parsed from YAML and then processed through XSL
  * stylesheets.
+ *
  * @since 0.1.0
  */
 public final class XtYaml implements Xtory {
@@ -45,6 +46,7 @@ public final class XtYaml implements Xtory {
 
     /**
      * Ctor.
+     *
      * @param yml The story in YAML
      */
     public XtYaml(final String yml) {
@@ -60,6 +62,7 @@ public final class XtYaml implements Xtory {
 
     /**
      * Ctor.
+     *
      * @param yml The story in YAML
      * @param prsr The parser to use
      */
@@ -69,6 +72,7 @@ public final class XtYaml implements Xtory {
 
     /**
      * Ctor.
+     *
      * @param yml The story in YAML
      * @param prsr The parser to use
      * @param trn The train to start with

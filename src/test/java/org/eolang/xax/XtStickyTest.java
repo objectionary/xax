@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link XtSticky}.
+ *
  * @since 0.1.0
  */
 final class XtStickyTest {

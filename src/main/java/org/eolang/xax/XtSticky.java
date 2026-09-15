@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 /**
  * A decorator of {@link Xtory} that guarantees any method is only
  * delegated to the decoratee only once.
+ *
  * @since 0.1.0
  */
 public final class XtSticky implements Xtory {
@@ -30,6 +31,7 @@ public final class XtSticky implements Xtory {
 
     /**
      * Ctor.
+     *
      * @param xtory Original story
      */
     public XtSticky(final Xtory xtory) {
