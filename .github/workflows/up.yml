@@ -5,6 +5,9 @@
 name: up
 'on':
   push:
+concurrency:
+  group: up-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   up:
     timeout-minutes: 15
