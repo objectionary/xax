@@ -3,6 +3,7 @@
 ---
 input: |
   # No comments.
+
   [x] > foo
     x > @
 asserts:
