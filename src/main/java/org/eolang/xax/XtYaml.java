@@ -121,14 +121,24 @@ public final class XtYaml implements Xtory {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public Xsline xsline() {
         Object sheets = this.map().get("sheets");
         if (sheets == null) {
             sheets = Arrays.asList();
         }
+        if (!(sheets instanceof Iterable<?>)) {
+            throw new IllegalArgumentException(
+                "The 'sheets' must be an Iterable"
+            );
+        }
         Train<Shift> trn = this.train;
-        for (final String sheet : (Iterable<String>) sheets) {
+        for (final Object item : (Iterable<?>) sheets) {
+            if (!(item instanceof String)) {
+                throw new IllegalArgumentException(
+                    "Each item in 'sheets' must be a String"
+                );
+            }
+            final String sheet = (String) item;
             if (sheet.startsWith("file://")) {
                 try {
                     trn = trn.with(
@@ -147,15 +157,24 @@ public final class XtYaml implements Xtory {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public Collection<String> asserts() {
         Object asserts = this.map().get("asserts");
         if (asserts == null) {
             asserts = Arrays.asList();
         }
+        if (!(asserts instanceof Iterable<?>)) {
+            throw new IllegalArgumentException(
+                "The 'asserts' must be an Iterable"
+            );
+        }
         final Collection<String> xpaths = new ArrayList<>(0);
-        for (final String xpath : (Iterable<String>) asserts) {
-            xpaths.add(xpath);
+        for (final Object item : (Iterable<?>) asserts) {
+            if (!(item instanceof String)) {
+                throw new IllegalArgumentException(
+                    "Each item in 'asserts' must be a String"
+                );
+            }
+            xpaths.add((String) item);
         }
         return xpaths;
     }
