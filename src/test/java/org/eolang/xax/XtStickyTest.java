@@ -17,6 +17,7 @@ import org.cactoos.io.ResourceOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -46,12 +47,22 @@ final class XtStickyTest {
     void cachesNullResult() {
         final AtomicInteger counter = new AtomicInteger();
         final Xtory sticky = new XtSticky(new XtStickyTest.Fake(counter, true));
-        sticky.map();
-        sticky.map();
-        MatcherAssert.assertThat(
-            "Expected map() to be delegated to decoratee only once",
-            counter.get(),
-            Matchers.is(1)
+        Assertions.assertAll(
+            () -> MatcherAssert.assertThat(
+                "Expected first map() call to return null",
+                sticky.map(),
+                Matchers.nullValue()
+            ),
+            () -> MatcherAssert.assertThat(
+                "Expected subsequent map() call to return cached null",
+                sticky.map(),
+                Matchers.nullValue()
+            ),
+            () -> MatcherAssert.assertThat(
+                "Expected map() to be delegated to decoratee only once",
+                counter.get(),
+                Matchers.is(1)
+            )
         );
     }
 
