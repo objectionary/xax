@@ -37,6 +37,11 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
     private boolean match;
 
     /**
+     * Outcoming XML of the story.
+     */
+    private XML after;
+
+    /**
      * Extra matcher for the outcoming XML.
      *
      * @since 0.6.0
@@ -79,12 +84,12 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
     public boolean matches(final Object object) {
         final Xtory xtory = Xtory.class.cast(object);
         Assumptions.assumeTrue(xtory.map().get("skip") == null);
-        final XML after = xtory.xsline().pass(xtory.before());
+        this.after = xtory.xsline().pass(xtory.before());
         final Collection<Map.Entry<String, Boolean>> xpaths =
             new ArrayList<>(0);
         int failures = 0;
         for (final String xpath : xtory.asserts()) {
-            final boolean success = !after.nodes(xpath).isEmpty();
+            final boolean success = !this.after.nodes(xpath).isEmpty();
             xpaths.add(new AbstractMap.SimpleImmutableEntry<>(xpath, success));
             if (!success) {
                 ++failures;
@@ -108,7 +113,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
             sum.append(": ").append(ent.getKey()).append(sep);
         }
         final String before = xtory.before().toString();
-        final String later = after.toString();
+        final String later = this.after.toString();
         sum.append(sep).append("XML before XSL transformation:").append(sep)
             .append("  ").append(before.replace(sep, sep.concat("  ")))
             .append(sep).append(
@@ -126,7 +131,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
                 break;
             }
         }
-        return this.match && this.extra.matches(after);
+        return this.match && this.extra.matches(this.after);
     }
 
     @Override
@@ -141,7 +146,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
     @Override
     public void describeMismatch(final Object story, final Description desc) {
         if (this.match) {
-            this.extra.describeMismatch(story, desc);
+            this.extra.describeMismatch(this.after, desc);
         } else {
             desc.appendText(System.lineSeparator()).appendText(this.summary);
         }
