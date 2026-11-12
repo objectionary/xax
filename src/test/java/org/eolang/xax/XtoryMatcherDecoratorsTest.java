@@ -60,9 +60,9 @@ final class XtoryMatcherDecoratorsTest {
         MatcherAssert.assertThat(
             "Both matches must reuse the exact output cached by XtSticky",
             results,
-            Matchers.allOf(
-                Matchers.hasSize(2),
-                Matchers.everyItem(Matchers.sameInstance(story.after()))
+            Matchers.contains(
+                Matchers.sameInstance(story.after()),
+                Matchers.sameInstance(story.after())
             )
         );
     }
