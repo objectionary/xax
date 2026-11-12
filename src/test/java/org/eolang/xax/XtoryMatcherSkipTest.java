@@ -21,8 +21,13 @@ final class XtoryMatcherSkipTest {
     void runsEnabledStories(final String flag) {
         MatcherAssert.assertThat(
             "A false or absent skip flag must allow XPath evaluation",
-            new XtoryMatcher().matches(
-                new XtYaml(String.format("document: <doc/>%nasserts:%n  - /missing%n%s%n", flag))
+            Assertions.assertDoesNotThrow(
+                () -> new XtoryMatcher().matches(
+                    new XtYaml(
+                        String.format("document: <doc/>%nasserts:%n  - /missing%n%s%n", flag)
+                    )
+                ),
+                "An enabled story must not be reported as skipped"
             ),
             Matchers.is(false)
         );
