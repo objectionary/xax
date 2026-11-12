@@ -20,7 +20,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 final class XtoryMatcherEmptyTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"", "assert: /missing", "assertions: /missing", "asserts:", "asserts: []"})
+    @ValueSource(strings = {"", "assert: /doc", "assertions: /doc", "asserts:", "asserts: []"})
     void rejectsEmptyAssertionSets(final String entry) {
         final Xtory story = new XtYaml(String.format("document: <doc/>%n%s%n", entry));
         Assertions.assertAll(
