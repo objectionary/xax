@@ -84,11 +84,15 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
     public boolean matches(final Object object) {
         final Xtory xtory = Xtory.class.cast(object);
         Assumptions.assumeTrue(xtory.map().get("skip") == null);
+        final Collection<String> expressions = xtory.asserts();
+        if (expressions.isEmpty()) {
+            throw new IllegalArgumentException("No XPath assertions were found in the story");
+        }
         this.after = xtory.xsline().pass(xtory.before());
         final Collection<Map.Entry<String, Boolean>> xpaths =
             new ArrayList<>(0);
         int failures = 0;
-        for (final String xpath : xtory.asserts()) {
+        for (final String xpath : expressions) {
             final boolean success = !this.after.nodes(xpath).isEmpty();
             xpaths.add(new AbstractMap.SimpleImmutableEntry<>(xpath, success));
             if (!success) {
