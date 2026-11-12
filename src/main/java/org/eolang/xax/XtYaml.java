@@ -14,6 +14,7 @@ import com.yegor256.xsline.TrDefault;
 import com.yegor256.xsline.Train;
 import com.yegor256.xsline.Xsline;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -139,11 +140,11 @@ public final class XtYaml implements Xtory {
                 );
             }
             final String sheet = (String) item;
-            if (sheet.startsWith("file://")) {
+            if (sheet.startsWith("file:")) {
                 try {
                     trn = trn.with(
                         new StXSL(
-                            new XSLDocument(Paths.get(sheet.substring(7)))
+                            new XSLDocument(Paths.get(URI.create(sheet)))
                         )
                     );
                 } catch (final IOException ex) {
