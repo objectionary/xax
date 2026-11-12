@@ -13,9 +13,11 @@ import org.opentest4j.TestAbortedException;
 
 /**
  * Tests for the optional skip flag.
+ *
  * @since 1.0
  */
 final class XtoryMatcherSkipTest {
+
     @ParameterizedTest
     @ValueSource(strings = {"", "skip: false", "skip: 'false'"})
     void runsEnabledStories(final String flag) {
