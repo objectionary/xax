@@ -84,7 +84,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
     public boolean matches(final Object object) {
         final Xtory xtory = Xtory.class.cast(object);
         Assumptions.assumeTrue(xtory.map().get("skip") == null);
-        this.after = xtory.xsline().pass(xtory.before());
+        this.after = xtory.after();
         final Collection<Map.Entry<String, Boolean>> xpaths =
             new ArrayList<>(0);
         int failures = 0;
