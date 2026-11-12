@@ -95,12 +95,24 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
         return result;
     }
 
-    /**
-     * Evaluate a compatible story and retain its diagnostics.
-     *
-     * @param xtory Story to evaluate
-     * @return Whether the story matches
-     */
+    @Override
+    public void describeTo(final Description desc) {
+        if (this.match) {
+            this.extra.describeTo(desc);
+        } else {
+            desc.appendText(this.header);
+        }
+    }
+
+    @Override
+    public void describeMismatch(final Object story, final Description desc) {
+        if (this.match) {
+            this.extra.describeMismatch(this.after, desc);
+        } else {
+            desc.appendText(System.lineSeparator()).appendText(this.summary);
+        }
+    }
+
     private boolean matchesStory(final Xtory xtory) {
         Assumptions.assumeTrue(xtory.map().get("skip") == null);
         this.after = xtory.xsline().pass(xtory.before());
@@ -151,23 +163,5 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
             }
         }
         return this.match && this.extra.matches(this.after);
-    }
-
-    @Override
-    public void describeTo(final Description desc) {
-        if (this.match) {
-            this.extra.describeTo(desc);
-        } else {
-            desc.appendText(this.header);
-        }
-    }
-
-    @Override
-    public void describeMismatch(final Object story, final Description desc) {
-        if (this.match) {
-            this.extra.describeMismatch(this.after, desc);
-        } else {
-            desc.appendText(System.lineSeparator()).appendText(this.summary);
-        }
     }
 }

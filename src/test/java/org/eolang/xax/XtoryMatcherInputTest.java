@@ -90,7 +90,9 @@ final class XtoryMatcherInputTest {
                     Matchers.containsString(String.valueOf(value))
                 )
             ),
-            () -> Assertions.assertFalse(called.get(), "Rejected inputs must not reach the XML matcher")
+            () -> Assertions.assertFalse(
+                called.get(), "Rejected inputs must not reach the XML matcher"
+            )
         );
     }
 
