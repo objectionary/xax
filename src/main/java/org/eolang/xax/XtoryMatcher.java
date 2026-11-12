@@ -78,10 +78,17 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
     public XtoryMatcher(final Matcher<XML> ext) {
         super();
         this.extra = ext;
+        this.header = "a story satisfying every XPath assertion";
     }
 
     @Override
     public boolean matches(final Object object) {
+        if (!(object instanceof Xtory)) {
+            this.match = false;
+            this.header = "an Xtory";
+            this.summary = String.format("Expected an Xtory, received %s", object);
+            return false;
+        }
         final Xtory xtory = Xtory.class.cast(object);
         Assumptions.assumeTrue(xtory.map().get("skip") == null);
         this.after = xtory.xsline().pass(xtory.before());
