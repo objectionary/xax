@@ -15,9 +15,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests for file URI stylesheets.
+ *
  * @since 1.0
  */
 final class XtYamlFileTest {
+
     @ParameterizedTest
     @ValueSource(strings = {"plain.xsl", "with space.xsl", "plus+hash#.xsl"})
     void transformsWithFileUri(final String name, @TempDir final Path directory)
@@ -27,7 +29,7 @@ final class XtYamlFileTest {
             sheet,
             String.join(
                 "",
-                "<xsl:stylesheet version='1.0' ",
+                "<xsl:stylesheet version='1.0' id='file-style' ",
                 "xmlns:xsl='http://www.w3.org/1999/XSL/Transform'>",
                 "<xsl:template match='/'><resolved/></xsl:template>",
                 "</xsl:stylesheet>"
