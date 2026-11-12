@@ -83,13 +83,24 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
 
     @Override
     public boolean matches(final Object object) {
-        if (!(object instanceof Xtory)) {
+        final boolean result;
+        if (object instanceof Xtory) {
+            result = this.matchesStory(Xtory.class.cast(object));
+        } else {
             this.match = false;
             this.header = "an Xtory";
             this.summary = String.format("Expected an Xtory, received %s", object);
-            return false;
+            result = false;
         }
-        final Xtory xtory = Xtory.class.cast(object);
+        return result;
+    }
+
+    /**
+     * Evaluate a compatible story and retain its diagnostics.
+     * @param xtory Story to evaluate
+     * @return Whether the story matches
+     */
+    private boolean matchesStory(final Xtory xtory) {
         Assumptions.assumeTrue(xtory.map().get("skip") == null);
         this.after = xtory.xsline().pass(xtory.before());
         final Collection<Map.Entry<String, Boolean>> xpaths =
