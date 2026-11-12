@@ -114,7 +114,9 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
     }
 
     private boolean matchesStory(final Xtory xtory) {
-        Assumptions.assumeTrue(xtory.map().get("skip") == null);
+        Assumptions.assumeFalse(
+            Boolean.parseBoolean(String.valueOf(xtory.map().get("skip")))
+        );
         final Collection<String> expressions = xtory.asserts();
         if (expressions.isEmpty()) {
             throw new IllegalArgumentException("No XPath assertions were found in the story");
