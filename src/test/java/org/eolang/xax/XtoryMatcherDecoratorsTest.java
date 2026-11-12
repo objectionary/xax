@@ -69,14 +69,16 @@ final class XtoryMatcherDecoratorsTest {
 
     private static Stream<Xtory> strictStories() {
         final Xtory story = new XtYaml(
-            String.format(
-                "document: <doc/>%nsheets:%n  - org/eolang/xax/invalid-output.xsl%n"
-                    + "asserts:%n  - /invalid%n"
+            String.join(
+                System.lineSeparator(), "document: <doc/>", "sheets:",
+                "  - org/eolang/xax/invalid-output.xsl", "asserts:", "  - /invalid"
             )
         );
         final XML schema = new XMLDocument(
-            "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>"
-                + "<xs:element name='doc' type='xs:string'/></xs:schema>"
+            String.join(
+                "", "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>",
+                "<xs:element name='doc' type='xs:string'/></xs:schema>"
+            )
         );
         return Stream.of(new XtStrict(story, schema), new XtStrictAfter(story, schema));
     }
