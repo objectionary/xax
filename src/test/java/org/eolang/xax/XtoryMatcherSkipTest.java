@@ -20,6 +20,8 @@ final class XtoryMatcherSkipTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"", "skip: false", "skip: 'false'"})
+    // Both the abort status and XPath result must be checked to detect a silently skipped test.
+    @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
     void runsEnabledStories(final String flag) {
         MatcherAssert.assertThat(
             "A false or absent skip flag must allow XPath evaluation",
