@@ -97,6 +97,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
 
     /**
      * Evaluate a compatible story and retain its diagnostics.
+     *
      * @param xtory Story to evaluate
      * @return Whether the story matches
      */
