@@ -119,7 +119,7 @@ public final class XtoryMatcher extends BaseMatcher<Xtory> {
         if (expressions.isEmpty()) {
             throw new IllegalArgumentException("No XPath assertions were found in the story");
         }
-        this.after = xtory.xsline().pass(xtory.before());
+        this.after = xtory.after();
         final Collection<Map.Entry<String, Boolean>> xpaths =
             new ArrayList<>(0);
         int failures = 0;
