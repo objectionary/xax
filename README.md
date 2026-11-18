@@ -53,6 +53,10 @@ asserts:
   - /doc/foo[.='bye']
 ```
 
+A story can set `skip: true` to skip its evaluation. An absent `skip` key or
+`skip: false` runs the story normally. The strings `"true"` and `"false"` are
+interpreted in the same way.
+
 Finally, make a unit test (using
 [JUnit5](https://github.com/junit-team/junit5),
 [Hamcrest](https://github.com/hamcrest/JavaHamcrest),
