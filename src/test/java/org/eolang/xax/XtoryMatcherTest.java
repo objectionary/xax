@@ -6,7 +6,9 @@ package org.eolang.xax;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.io.InputOf;
@@ -30,6 +32,25 @@ import org.junit.jupiter.params.ParameterizedTest;
  * @since 0.1.0
  */
 final class XtoryMatcherTest {
+
+    @Test
+    void parsesInputOnlyOncePerMatch() {
+        final AtomicInteger parsed = new AtomicInteger();
+        new XtoryMatcher().matches(
+            new XtYaml(
+                String.format("input: x%nasserts:%n  - /doc%n"),
+                text -> {
+                    parsed.incrementAndGet();
+                    return new XMLDocument("<doc/>");
+                }
+            )
+        );
+        MatcherAssert.assertThat(
+            "Input must be parsed exactly once per match",
+            parsed.get(),
+            Matchers.equalTo(1)
+        );
+    }
 
     @Test
     void forwardsTransformedXmlToExtraMatcherMismatchDescription() {

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.yaml.snakeyaml.Yaml;
 
 /**
@@ -44,6 +45,11 @@ public final class XtYaml implements Xtory {
      * The parser to use, when {@code input} is provided in the YAML.
      */
     private final Parser parser;
+
+    /**
+     * The XML parsed by {@link #before()}, kept to parse the input once.
+     */
+    private final Map<String, XML> parsed;
 
     /**
      * Ctor.
@@ -83,6 +89,7 @@ public final class XtYaml implements Xtory {
         this.yaml = yml;
         this.parser = prsr;
         this.train = trn;
+        this.parsed = new ConcurrentHashMap<>(1);
     }
 
     @Override
@@ -93,8 +100,12 @@ public final class XtYaml implements Xtory {
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public XML before() {
+        return this.parsed.computeIfAbsent("before", key -> this.parse());
+    }
+
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    private XML parse() {
         final Object doc = this.map().get("document");
         final XML xml;
         if (doc == null) {
