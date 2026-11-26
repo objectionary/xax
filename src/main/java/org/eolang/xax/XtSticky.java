@@ -8,6 +8,7 @@ import com.jcabi.xml.XML;
 import com.yegor256.xsline.Xsline;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
@@ -18,6 +19,11 @@ import java.util.function.Supplier;
  * @since 0.1.0
  */
 public final class XtSticky implements Xtory {
+
+    /**
+     * Sentinel for null cached value.
+     */
+    private static final Object NULL = new Object();
 
     /**
      * Original story.
@@ -66,9 +72,25 @@ public final class XtSticky implements Xtory {
 
     @SuppressWarnings("unchecked")
     private <T> T through(final String method, final Supplier<T> supplier) {
-        return (T) this.cache.computeIfAbsent(
+        final Object value = this.cache.computeIfAbsent(
             method,
-            s -> supplier.get()
+            name -> {
+                final Object res = supplier.get();
+                final Object ret;
+                if (res == null) {
+                    ret = XtSticky.NULL;
+                } else {
+                    ret = res;
+                }
+                return ret;
+            }
         );
+        final T result;
+        if (Objects.equals(value, XtSticky.NULL)) {
+            result = null;
+        } else {
+            result = (T) value;
+        }
+        return result;
     }
 }
